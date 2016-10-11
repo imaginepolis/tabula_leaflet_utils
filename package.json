@@ -1,0 +1,23 @@
+{
+  "name": "tabula_leaflet_utils",
+  "version": "0.0.1",
+  "description": "",
+  "main": "tabula_leaflet_utils.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tabulaco/tabula_leaflet_utils.git"
+  },
+  "keywords": [
+    "leafletjs",
+    "utils"
+  ],
+  "author": "Juan Camilo Ibarra <juanibarral@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tabulaco/tabula_leaflet_utils/issues"
+  },
+  "homepage": "https://github.com/tabulaco/tabula_leaflet_utils#readme"
+}
