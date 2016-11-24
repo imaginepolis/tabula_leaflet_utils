@@ -53,6 +53,37 @@ MapRenderer.prototype.renderAsCircles = function(params)
 	return layer;
 }
 
+MapRenderer.prototype.renderPolygon = function(params)
+{
+	var _this = this;
+	var map = params.map;
+	var json = params.json;
+	var layer = L.geoJson(json, {
+		onEachFeature : function(feature, layer)
+		{
+			layer.on({
+				mouseover : function(e)
+				{
+					if(params.mouseover)
+						params.mouseover(e);
+				},
+				mouseout : function(e)
+				{
+					if(params.mouseout)
+						params.mouseout(e);
+				},
+				click : function(e)
+				{
+					if(params.click)
+						params.click(e);
+				}
+			})
+		}
+	});
+	layer.addTo(map);
+	return layer;
+}
+
 MapRenderer.prototype.updateStyleByProperties = function(params)
 {
 	var _this = this;
@@ -91,11 +122,30 @@ MapRenderer.prototype.updateFeatureProperties = function(params)
 	}
 }
 
+MapRenderer.prototype.getLayerPropertyList = function(params)
+{
+	var _this = this;
+	var layer = params.layer;
+	var prop = params.property;
 
-MapRenderer.prototype.addPropertiesInfo = function(params)
+	var list = [];
+
+	for (each in layer._layers) {
+		var l = layer._layers[each];
+		var properties = l.feature.properties;
+		if(properties[prop])
+			list.push(properties[prop])
+	}
+
+	return list;
+}
+
+
+MapRenderer.prototype.addPropertiesInfoControl = function(params)
 {
 	var _this = this;
 	var map = params.map;
+	var labels = params.labels;
 	var info = L.control();
 	info.onAdd = function (map) {
 	    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
@@ -106,11 +156,21 @@ MapRenderer.prototype.addPropertiesInfo = function(params)
 	info.update = function (props) {
 		if(props)
 		{
-			this._div.innerHTML = '<h4>Properties:</h4>';
-		    for(each in props)
+			this._div.innerHTML = '<h4>' + (params.title ? params.title : 'Properites:') + '</h4>';
+		    
+			for(each in props)
 		    {
-		    	this._div.innerHTML += "<b>" + each + ": </b>" + props[each] + "<br>"
-		    } 	
+		    	if(labels != undefined)
+		    	{
+		    		if(labels.indexOf(each) != -1)
+						this._div.innerHTML += "<b>" + each + ": </b>" + props[each] + "<br>"
+		    	}
+		    	else
+		    	{
+		    		this._div.innerHTML += "<b>" + each + ": </b>" + props[each] + "<br>";	
+		    	}
+		    	
+		    }			     	
 		}
 		else
 		{
