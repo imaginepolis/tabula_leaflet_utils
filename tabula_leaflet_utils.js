@@ -195,16 +195,23 @@ MapRenderer.prototype.addLegend = function(params)
 
 	legend.update = function(params)
 	{
-		var title = params.title;
-	    var values = params.values;
-	    var scale = params.scale;
+		if(params)
+		{
+			var title = params.title;
+		    var values = params.values;
+		    var scale = params.scale;
 
-	    this._div.innerHTML = '<h4>'+ title+'</h4>';
-	    for (var i = 0; i < values.length; i++) {
-	        this._div.innerHTML +=
-	            '<i style="background:' + scale(values[i]) + '"></i> ≥ ' +
-	           Math.floor(values[i]) + '<br>';
-	    }
+		    this._div.innerHTML = '<h4>'+ title+'</h4>';
+		    for (var i = 0; i < values.length; i++) {
+		        this._div.innerHTML +=
+		            '<i style="background:' + scale(values[i]) + '"></i> ≥ ' +
+		           Math.floor(values[i]) + '<br>';
+		    }	
+		}
+		else
+		{
+			this._div.innerHTML = null;
+		}
 	}
 	legend.addTo(map);
 	return legend;
