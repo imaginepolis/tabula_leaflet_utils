@@ -10,12 +10,28 @@ var MapRenderer = function(){
 		fillOpacity : 0
 	}
 
-	this.selected_style = {
+	this.hover_style = {
+		weight : 1,
+		opacity : 1,
+		color : '#FFFF00',
+		fillColor : '#FFFF00',
+		fillOpacity : 0.5
+	}
 
+	this.selected_style = {
+		weight : 1,
+		opacity : 1,
+		color : '#FF00FF',
+		fillColor : '#FF00FF',
+		fillOpacity : 0.5
 	}
 
 	this.unselected_style = {
-
+		weight : 1,
+		opacity : 1,
+		color : '#000000',
+		fillColor : '#AAAAAA',
+		fillOpacity : 0.5
 	}
 }
 
