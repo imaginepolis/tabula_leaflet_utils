@@ -94,7 +94,8 @@ MapRenderer.prototype.renderPolygon = function(params)
 						params.click(e);
 				}
 			})
-		}
+		},
+		style : _this.unselected_style
 	});
 	layer.addTo(map);
 	return layer;
