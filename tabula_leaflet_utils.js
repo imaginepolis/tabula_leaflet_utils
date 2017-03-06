@@ -1,16 +1,16 @@
 
 require('leaflet');
 
-var MapRenderer = function(){
+var MapRenderer = function(params){
 
-	this.circleOptions = {
+	this.circleOptions = params.circleOptions ? params.circleOptions : {
 		radius : 4,
 		color : '#000',
 		weight : 1,
 		fillOpacity : 0
 	}
 
-	this.hover_style = {
+	this.hover_style = params.hover_style ? params.hover_style : {
 		weight : 1,
 		opacity : 1,
 		color : '#FFFF00',
@@ -18,7 +18,7 @@ var MapRenderer = function(){
 		fillOpacity : 0.5
 	}
 
-	this.selected_style = {
+	this.selected_style = params.selected_style ? params.selected_style :  {
 		weight : 1,
 		opacity : 1,
 		color : '#FF00FF',
@@ -26,13 +26,14 @@ var MapRenderer = function(){
 		fillOpacity : 0.5
 	}
 
-	this.unselected_style = {
+	this.unselected_style = params.unselected_style ? params.unselected_style :  {
 		weight : 1,
 		opacity : 1,
 		color : '#000000',
 		fillColor : '#AAAAAA',
 		fillOpacity : 0.5
 	}
+	//
 }
 
 MapRenderer.prototype.renderAsCircles = function(params)
