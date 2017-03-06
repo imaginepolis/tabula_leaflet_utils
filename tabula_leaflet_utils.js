@@ -242,6 +242,34 @@ MapRenderer.prototype.zoomLayerExtend = function(params)
 	map.fitBounds(layer.getBounds());	
 }
 
+MapRenderer.prototype.renderLayerFeatureNames = function(params)
+{
+	var map = params.map;
+	var layer = params.layer;
+	var name = params.prop_name;
+	var class_name = params.class_name;
+	var markers = {};
+
+	for (each in layer._layers) {
+		var l = layer._layers[each];
+		var prop = l.feature.properties[name];
+		var bounds = l.getBounds();
+		var lat = bounds._northEast.lat + ((bounds._southWest.lat - bounds._northEast.lat) / 2);
+		var lng = bounds._northEast.lng - ((bounds._northEast.lng - bounds._southWest.lng) / 2);
+		
+		var icon_props = {
+			html : prop
+		}
+		if(class_name)
+			icon_props["className"] = class_name;
+
+		var myIcon = L.divIcon(icon_props);
+		var marker = L.marker([lat, lng], {icon : myIcon});
+		marker.addTo(map);
+		markers[prop] = marker;
+	}
+}
+
 module.exports = {
 	MapRenderer : MapRenderer
 }
