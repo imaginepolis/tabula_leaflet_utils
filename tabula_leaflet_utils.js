@@ -234,6 +234,12 @@ MapRenderer.prototype.addLegend = function(params)
 	return legend;
 }
 
+MapRenderer.prototype.zoomLayerExtend = function(params)
+{
+	var map = params.map;
+	var layer = params.layer;
+	map.fitBounds(layer.getBounds());	
+}
 
 module.exports = {
 	MapRenderer : MapRenderer
