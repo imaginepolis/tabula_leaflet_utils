@@ -47,6 +47,8 @@ MapRenderer.prototype.renderAsCircles = function(params)
 		},
 		onEachFeature : function(feature, layer)
 		{
+			if(params.onEachFeature)
+				params.onEachFeature(feature, layer);
 			layer.on({
 				mouseover : function(e)
 				{
@@ -78,6 +80,8 @@ MapRenderer.prototype.renderPolygon = function(params)
 	var layer = L.geoJson(json, {
 		onEachFeature : function(feature, layer)
 		{
+			if(params.onEachFeature)
+				params.onEachFeature(feature, layer);
 			layer.on({
 				mouseover : function(e)
 				{
