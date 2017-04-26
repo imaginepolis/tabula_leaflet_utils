@@ -47,8 +47,6 @@ MapRenderer.prototype.renderAsCircles = function(params)
 		},
 		onEachFeature : function(feature, layer)
 		{
-			if(params.onEachFeature)
-				params.onEachFeature(feature, layer);
 			layer.on({
 				mouseover : function(e)
 				{
@@ -209,7 +207,7 @@ MapRenderer.prototype.addLegend = function(params)
 	var _this = this;
 	var map = params.map;
 
-	var legend = L.control({position: 'bottomright'});
+	var legend = L.control({position: params.position ? params.position : 'bottomright'});
 	legend.onAdd = function (map) {
 	    this._div = L.DomUtil.create('div', 'info legend');
 	    return this._div;
@@ -219,16 +217,30 @@ MapRenderer.prototype.addLegend = function(params)
 	{
 		if(params)
 		{
-			var title = params.title;
 		    var values = params.values;
 		    var scale = params.scale;
+		    var title = params.title;
 
-		    this._div.innerHTML = '<h4>'+ title+'</h4>';
-		    for (var i = 0; i < values.length; i++) {
-		        this._div.innerHTML +=
-		            '<i style="background:' + scale(values[i]) + '"></i> ≥ ' +
-		           Math.floor(values[i]) + '<br>';
-		    }	
+		    if(params.scale)
+		    {
+		    	this._div.innerHTML = '<h4>'+ title+'</h4>';
+			    for (var i = 0; i < values.length; i++) {
+			        this._div.innerHTML +=
+			            '<i style="background:' + scale(values[i]) + '"></i> ≥ ' +
+			           Math.floor(values[i]) + '<br>';
+			    }	
+		    }
+		    else if(params.legend_pair)
+		    {
+		    	this._div.innerHTML = '<h4>'+ title+'</h4>';
+			    for (var i = 0; i < params.legend_pair.color.length; i++) {
+			        this._div.innerHTML +=
+			            '<i style="background:' + params.legend_pair.color[i] + '"></i>' +
+			           params.legend_pair.text[i] + '<br>';
+			    }	
+
+		    }
+		    
 		}
 		else
 		{
@@ -273,6 +285,7 @@ MapRenderer.prototype.renderLayerFeatureNames = function(params)
 		markers[prop] = marker;
 	}
 }
+
 
 getCentroid = function (arr) {
     var twoTimesSignedArea = 0;
