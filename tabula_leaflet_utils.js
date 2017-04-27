@@ -286,6 +286,26 @@ MapRenderer.prototype.renderLayerFeatureNames = function(params)
 	}
 }
 
+MapRenderer.prototype.getFeatureByProperty = function(params)
+{
+	var prop_name = params.property;
+	var prop_val = params.value;
+	var layer = params.layer
+	var feature = undefined;
+
+	for (each in layer._layers) {
+		var l = layer._layers[each];
+		var prop = l.feature.properties[prop_name];
+		if(prop == prop_val)
+		{
+			feature = l;
+			break;
+		}
+	}
+
+	return feature;
+}
+
 
 getCentroid = function (arr) {
     var twoTimesSignedArea = 0;
