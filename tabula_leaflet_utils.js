@@ -260,7 +260,14 @@ MapRenderer.prototype.addLegend = function(params)
 
 		    if(params.scale)
 		    {
-		    	this._div.innerHTML = '<h4>'+ title+'</h4>';
+		    	if(params.header_tooltip)
+		    	{
+		    		this._div.innerHTML = '<div class="leaflet_utils_legend_tooltip"><h4>' + title + '</h4><div class="tooltiptext">' + params.header_tooltip + '</div></div><br>'
+		    	}
+		    	else
+		    	{
+		    		this._div.innerHTML = '<h4>'+ title+'</h4>';	
+		    	}
 			    for (var i = 0; i < values.length; i++) {
 			        this._div.innerHTML +=
 			            '<i style="background:' + scale(values[i]) + '"></i> ≥ ' +
@@ -269,7 +276,14 @@ MapRenderer.prototype.addLegend = function(params)
 		    }
 		    else if(params.legend_pair)
 		    {
-		    	this._div.innerHTML = '<h4>'+ title+'</h4>';
+		    	if(params.header_tooltip)
+		    	{
+					this._div.innerHTML = '<div class="leaflet_utils_legend_tooltip"><h4>' + title + '</h4><div class="tooltiptext">' + params.header_tooltip + '</div></div><br>'
+		    	}
+		    	else
+		    	{
+		    		this._div.innerHTML = '<h4>'+ title+'</h4>';	
+		    	}
 			    for (var i = 0; i < params.legend_pair.color.length; i++) {
 			        this._div.innerHTML +=
 			            '<i style="background:' + params.legend_pair.color[i] + '"></i>' +
