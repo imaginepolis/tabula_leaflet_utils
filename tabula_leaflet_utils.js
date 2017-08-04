@@ -166,7 +166,7 @@ MapRenderer.prototype.addPropertiesInfoControl = function(params)
 	var _this = this;
 	var map = params.map;
 	var labels = params.labels;
-	var info = L.control();
+	var info = L.control({position: params.position ? params.position : 'topright'});
 	info.onAdd = function (map) {
 	    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
 	    this.update();
@@ -176,7 +176,7 @@ MapRenderer.prototype.addPropertiesInfoControl = function(params)
 	info.update = function (props) {
 		if(props)
 		{
-			this._div.innerHTML = '<h4>' + (params.title ? params.title : 'Properites:') + '</h4>';
+			this._div.innerHTML = '<h4>' + (params.title ? params.title : 'Properties:') + '</h4>';
 		    
 			for(each in props)
 		    {
@@ -191,6 +191,43 @@ MapRenderer.prototype.addPropertiesInfoControl = function(params)
 		    	}
 		    	
 		    }			     	
+		}
+		else
+		{
+			this._div.innerHTML = null;
+		}
+	    
+	};
+	info.addTo(map);
+	return info;
+}
+
+MapRenderer.prototype.addSimpleControl = function(params)
+{
+	var _this = this;
+	var map = params.map;
+	var info = L.control({position: params.position ? params.position : 'topright'});
+	info.onAdd = function (map) {
+	    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+	    if(params.onAdd)
+	    {
+	    	params.onAdd();
+	    }
+	    return this._div;
+	};
+
+	info.onRemove = function(map){
+		if(params.onRemove)
+	    {
+	    	params.onRemove();
+	    }
+	}
+
+	info.update = function (params) {
+		if(params)
+		{
+			this._div.innerHTML = '<h4>' + params.title + '</h4>';
+		    this._div.innerHTML += params.content;
 		}
 		else
 		{
